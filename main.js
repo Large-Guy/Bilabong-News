@@ -1,5 +1,20 @@
 var seed = 0
-var nouns = ["'a ' + Adjective() + ' Bog'", 
+var nouns = [
+"'a ' + Adjective() + ' bog'", 
+"'a ' + Adjective() + ' dog'", 
+"'a ' + Adjective() + ' pig'",
+"'a ' + Adjective() + ' giraffe'",  
+"'a ' + Adjective() + ' kob'", 
+"'a ' + Adjective() + ' duck'", 
+"'a ' + Adjective() + ' can of soup'",
+"'a ' + Adjective() + ' pasta'",
+"'a ' + Adjective() + ' spaghetti'",   
+"'a ' + Adjective() + ' pizza'",
+"'a ' + Adjective() + ' fork'",
+"'a ' + Adjective() + ' spoon'",
+"'a ' + Adjective() + ' book'",
+"'a ' + Adjective() + ' shit'",
+"'a ' + Adjective() + ' witness'",
 "'Bog'", 
 "'Yog'", 
 "'Kob'", 
@@ -9,18 +24,27 @@ var nouns = ["'a ' + Adjective() + ' Bog'",
 "'Herv'", 
 "'Fib'", 
 "'Pig'",
-"'Dog'"
+"'Dog'",
 ];
-var adjectives = ["'fat'", 
+var adjectives = [
+"'fat'", 
 "'ugly'", 
+"'Floridian'", 
 "'stupid'", 
 "'idiotic'", 
 "'baby'", 
 "'local'", 
 "'angry'", 
+"'demonic'", 
+"'french'", 
 "'sad'", 
 "'depressed'", 
-"'crying'"
+"'crying'",
+"'little'",
+"'high calorie'",
+"''",
+"eval(Noun()) + 'phobic'",
+"Adjective() + 'phobic'",
 ];
 var events = [
     "'9/11'",
@@ -32,25 +56,92 @@ var verbs_past = [
     "'beat up ' + Number(1,25) + ' ' + eval(Noun())+'s'", 
     "'attacked ' + Number(1,25) + ' ' + eval(Noun())+'s'", 
     "'recreated ' + Event()", 
-    "'put ' + eval(Noun()) + ' in a '", 
+    "'put ' + eval(Noun()) + ' in a ' + Place()", 
     "'ate ' + Number(1,50) + ' ' + eval(Noun())+'s'", 
     "'obliterated ' + eval(Noun())", 
     "'murdered ' + eval(Noun())",
-    "'died'"
+    "'died'",
+    "'was screaming ' + Quote()",
+    "'was calmly saying ' + Quote()",
+    "'was on fire, yelling ' + Quote()",
+    "'was walking when, ' + Generate()",
+    "'was walking to ' + Place() + ' when ' + Generate()",
+    "'blew up a ' + Place()", 
 ]
 var verbs_present = [
     "'murdering ' + eval(Noun())",
     "'eating ' + Number(1,50) + ' ' + eval(Noun())+'s'",
-    "'in 4k ' + eval(VerbPresent())"
+    "'in 4k ' + eval(VerbPresent())",
+    "'screaming ' + Quote()",
+    "'calmly saying ' + Quote()",
+    "'on fire, yelling ' + Quote()",
+    "'walking when, ' + Generate()",
+    "'walking to ' + Place() + ' when ' + Generate()",
+    "'blowing up a ' + Place()", 
 ]
 var conjunctions = [
-    "+', and then ' + eval(VerbPast())",
-    "+', and so they ' + eval(VerbPast())",
-    "+', and because of this ' + eval(Noun()) + ' ' + eval(VerbPast())"
+    "+', and then, ' + eval(VerbPast())",
+    "+', and, ' + eval(VerbPast())",
+    "+', and so, they ' + eval(VerbPast())",
+    "+', and because of this, ' + eval(Noun()) + ' ' + eval(VerbPast())",
+    "+'. Later that day,' + Generate()",
 ]
+var quotes = [
+    "'\"Fuck you!\"'",
+    "'\"HO HO HO MOTHER FUCKER!\"'",
+    "'\"I love eating!\"'",
+    "'\"GAERGJOJOJAWFOPJOJ!\"'",
+    "'\"If two mind readers read each other’s minds, who’s mind are they reading?\"'",
+    "'\"Would you rather have unlimited bacon, but no games, or games, unlimited games, but no games?\"'",
+]
+var places = [
+    "'a ' + Adjective() + ' hole'",
+    "'a ' + Adjective() + ' pit'",
+    "'a ' + Adjective() + ' room'",
+    "'a ' + Adjective() + ' jail'",
+    "'a ' + Adjective() + ' prison'",
+    "'a ' + Adjective() + ' school'",
+    "'a ' + Adjective() + ' cupboard'",
+    "'a ' + ' hole'",
+    "'a ' + ' pit'",
+    "'a ' + ' room'",
+    "'a ' + ' jail'",
+    "'a ' + ' prison'",
+    "'a ' + ' school'",
+    "'a ' + ' cupboard'",
+]
+function Place()
+{
+    return eval(places[Math.floor(rand()*places.length)]);
+}
+function Quote()
+{
+    return eval(quotes[Math.floor(rand()*quotes.length)]);
+}
 function Adjective()
 {
-    return eval(adjectives[Math.floor(rand()*adjectives.length)]);
+    let v = eval(adjectives[Math.floor(rand()*adjectives.length)])
+    if(rand() <= 0.5)
+    {
+        v += ", " + eval(adjectives[Math.floor(rand()*adjectives.length)])
+        if(rand() <= 0.5)
+        {
+            v += ", " + eval(adjectives[Math.floor(rand()*adjectives.length)])
+            if(rand() <= 0.5)
+            {
+                v += ", " + eval(adjectives[Math.floor(rand()*adjectives.length)])
+                if(rand() <= 0.5)
+                {
+                    v += ", " + eval(adjectives[Math.floor(rand()*adjectives.length)])
+                    if(rand() <= 0.5)
+                    {
+                        v += ", " + eval(adjectives[Math.floor(rand()*adjectives.length)])
+                    }
+                }
+            }
+        }
+    }
+    return v;
 }
 function Event()
 {
@@ -82,15 +173,23 @@ function Generate()
     if(rand() <= 0.5)
     {
         str += Conjunction()
+        if(rand() <= 0.25)
+        {
+            str += Conjunction()
+            if(rand() <= 0.125)
+            {
+                str += Conjunction()
+            }
+        }
     }
     console.log(str)
     return eval(str) + ".";
 }
 function rand() 
 {
-    let value = seed;
+    let value = seed*40;
     value = (value * 9301 + 49297) % 233280;
-    seed += 1
+    seed += 0.1
     return value / 233280;
 }
 function getDateFormatted(offsetDays = 0) {
@@ -104,7 +203,7 @@ function getDateFormatted(offsetDays = 0) {
     return `${month}/${day}/${year}`;
   }
 function daysSince2000(date) {
-  const year2000 = new Date(2000, 0, 1);
+  const year2000 = new Date(2020, 0, 1);
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   
   const timeDifference = date - year2000;
