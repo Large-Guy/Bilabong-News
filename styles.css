@@ -1,0 +1,25 @@
+body
+{
+    background-color:#f2d3ac;
+}
+img
+{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.ARTICLE
+{
+    background-color:#e7a76c;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+p
+{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    text-align: center;
+}
